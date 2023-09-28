@@ -6,9 +6,8 @@ const labelsDepuis2000 = [
     '2020', '2021'
 ];
 
-export default prénomsRares22Depuis2000;
 
-const prénomsRares22Depuis2000 = [{
+export const prénomsRares22Depuis2000 = [{
         "genre": 1,
         "département": 22,
         "nombre": 4,

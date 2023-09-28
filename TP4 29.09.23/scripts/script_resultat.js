@@ -1,11 +1,10 @@
-//import { prénomsRares22Depuis2000 } from "../data/Dpt22depuis2000nouv.js";
+import { prénomsRares22Depuis2000 } from "../data/Dpt22depuis2000nouv.js";
 
 let mainContentDiv;
 let chartCanvas;
 const maleNames = Array();
-const femalNames = Array();
-let topFiveMaleArray;
-let topFiveFemaleArray;
+let topFiveMaleArray = [];
+const labelsDepuis2000 = [];
 
 
 /*
@@ -23,7 +22,7 @@ qu'il y a eu tous les ans pour ces 5 prénoms et afficher sur le charts
 */
 
 window.addEventListener("DOMContentLoaded", init);
-const labelsDepuis2000 = [];
+
 
 function init() {
     mainContentDiv = document.getElementById("mainContentDivId");
@@ -35,36 +34,11 @@ function init() {
 };
 
 function createArray() {
-    for (let i = 2000; i <= 2024; i++) {
+    for (let i = 2000; i <= 2021; i++) {
         labelsDepuis2000.push(i)
     };
     console.log(labelsDepuis2000);
 };
-
-
-const prénomsRares22Depuis2000 = [{
-        "genre": 1,
-        "département": 22,
-        "nombre": 4,
-        "année": 2006,
-        "prénom": "AARON"
-    },
-    {
-        "genre": 1,
-        "département": 22,
-        "nombre": 12,
-        "année": 2007,
-        "prénom": "AARON"
-    },
-    {
-        "genre": 1,
-        "département": 22,
-        "nombre": 18,
-        "année": 2008,
-        "prénom": "AARON"
-    }
-]
-
 
 /*
 
@@ -100,24 +74,32 @@ function calculateRareName() {
                 maleNames[id].répartition.push({ "année": item.année, "nombre": item.nombre });
             } else {
                 maleNames.push({ "prénom": item.prénom, "total": item.nombre, "répartition": [{ "année": item.année, "nombre": item.nombre }] });
+
+
             }
         })
 
-
     maleNames.sort(function(a, b) {
         return (a.total - b.total);
+
     })
 
     console.log("Top Five Male : ")
     const length = maleNames.length
+
     for (let i = 1; i < 6; i++) {
         console.log(maleNames[length - i].prénom + " : " + maleNames[length - i].total)
+        topFiveMaleArray.push(maleNames[length - i].prénom)
     }
+
 };
 
 //DO THE MATH AND VOILA
 
 function createChart() {
+
+    console.log(topFiveMaleArray); //test the array
+
     chartCanvas = document.createElement("canvas");
     chartCanvas.setAttribute("id", "chartCanvasId");
     mainContentDiv.appendChild(chartCanvas);
@@ -127,23 +109,23 @@ function createChart() {
         data: {
             labels: labelsDepuis2000,
             datasets: [{
-                label: 'topOneName',
+                label: topFiveMaleArray[0],
                 backgroundColor: "#F55D3E",
                 data: [12, 59, 5, 56, 58, 12, 59, 87, 45],
             }, {
-                label: 'topTwoName',
+                label: topFiveMaleArray[1],
                 backgroundColor: "#878E88",
                 data: [12, 59, 5, 56, 58, 12, 59, 85, 23],
             }, {
-                label: 'topThreeName',
+                label: topFiveMaleArray[2],
                 backgroundColor: "#F7CB15",
                 data: [12, 59, 5, 56, 58, 12, 59, 65, 51],
             }, {
-                label: 'topFourName',
+                label: topFiveMaleArray[3],
                 backgroundColor: "#76BED0",
                 data: [12, 59, 5, 56, 58, 12, 59, 12, 74],
             }, {
-                label: 'topFiveName',
+                label: topFiveMaleArray[4],
                 backgroundColor: "#87C38F",
                 data: [12, 59, 5, 56, 58, 12, 59, 12, 74],
             }],
